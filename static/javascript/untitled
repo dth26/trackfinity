@@ -1,0 +1,12 @@
+
+
+
+to do
+----
+1) build cron 
+	-	delete track every 24 hour
+2) fix duplicate song names
+3) build loading menu
+	a)	 build loading menu, with estimated load times. and a descript of how playlist works (deleting)
+4) look into microsoft azure
+5) fix create playlist logic

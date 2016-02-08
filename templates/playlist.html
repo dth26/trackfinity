@@ -1,0 +1,52 @@
+{% extends 'base.html'%}	
+
+{% block css %}
+<style>
+    #playlistSection{
+        margin-top: 130px;
+        width: 900px;
+        left: 50%;
+        margin-left: -450px;
+    }
+</style>
+
+{% endblock %}
+
+
+
+
+
+{% block content %}
+    <div class="section-container m-section" id="playlistSection" >
+        <div class="row section-container-header">
+            <div class="col-md-12">
+                <h2 style="color: #D1E4EB;">{{playlist_name}}&nbsp;&nbsp;<small>a playlist from {{owner}}</small></h2>
+            </div>
+            <div class="col-md-12">
+                <h3 style="color:#BEC3C4; font-weight:500">{{message}}</h3>
+            </div>
+        </div> 
+        <div class="row" style="color: #6D6596; margin-top: 20px;margin-bottom: 10px; border-bottom: 1px solid #4C585C; font-size:13px; font-weight:700">
+            <div class="col-md-3">Artist</div>
+            <div class="col-md-3">Track</div>
+            <div class="col-md-4">Play Track</div>
+            <div class="col-md-2">Download</div>
+        </div>
+        {% for track in playlist %}
+        <div class="row" style="color:white;margin-top:10px">
+            <div class="col-md-3">{{track.artist|e}}</div>
+            <div class="col-md-3">{{track.track_name|e}}</div>
+            <div class="col-md-4">
+            	<audio class="" controls>
+                    <source src="/getTrack?artist={{track.artist}}&track_name={{track.track_name}}&track_id={{track.trackid}}" type='audio/mpeg'>
+                </audio>
+            </div>
+            <div class="col-md-2">
+            	 <a href="/getTrack?artist={{track.artist}}&track_name={{track.track_name}}&track_id={{track.trackid}}" id="downloadTrack" style="color:white; margin-left:20px" class="glyphicon glyphicon-download-alt" ng-click="deleteTrack($event, {{track.trackid}})" download></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+

@@ -1,0 +1,161 @@
+{% extends 'base.html'%}	
+
+{% block css %}
+   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/music.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="music-container center">
+    <!-- BEGIN section menu -->
+    <div id='cssmenu'>
+        <ul>
+           <li ng-click="swapMusicSection($event, '#trackSection')" class='m-tab active'><a href="#" id="trackSectionA">Download</a></li>
+           <li ng-click="swapMusicSection($event, '#playlistSection')" class="m-tab"><a href="#" id="playlistSectionA">Playlist</a></li>
+        </ul>
+    </div>
+    <!-- END section menu -->
+    <!-- BEGIN Playlist Section -->
+    <div class="section-container m-section" id="playlistSection" style="display:none">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" ng-model="curPlaylistTrackURL" placeholder="Soundcloud/Youtube URL">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" ng-model="curPlaylistTrack" placeholder="Track Name">
+                    </div>
+                    <div class="col-md-6">
+                         <input type="text" class="form-control" ng-model="curPlaylistTrackArtist" placeholder="Artist Name">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" ng-show="(curPlaylistTrackURL && curPlaylistTrackArtist && curPlaylistTrack) !=''" >
+                <p style="color:white; cursor:pointer" ng-click="addTrackToPlaylist(curPlaylistTrackURL, curPlaylistTrackArtist, curPlaylistTrack)">
+                    <span class="glyphicon glyphicon-plus " style="position:relative !important;"></span> Add Track
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- END Playlist Section  -->
+    <!-- BEGIN track Section -->
+    <div class="section-container m-section" id="trackSection">
+        <div class="row">
+            <div class="col-md-12">
+    			<input type="text" class="form-control" ng-model="youtubeURL" placeholder="Soundcloud/Youtube URL">
+    		</div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-md-6">
+    			<input type="text" class="form-control" ng-model="trackName" placeholder="Track Name">
+    		</div>
+    		<div class="col-md-6">
+    			<input type="text" class="form-control" ng-model="artistName" placeholder="Artist Name">
+    		</div>
+        </div>
+    	<div class="row"  style="margin-top: 40px;">
+    	    <div class="col-md-4 height3">
+    	    	<button id="downloadTrackButton" type="submit" class="btn btn-success btn-lg" ng-click="getTrack(youtubeURL, trackName, artistName)">Get Track</button>
+        	</div>
+        	<div class="col-md-6 height3">
+        	    <!-- <audio class="centerY" controls>
+                    <source src="[[getTrackUrl()]]" type='audio/mpeg'>
+                </audio> -->
+                <p style="color:#88798C; margin-top:10px; text-align:right">[[downloadMessage]]</p>
+        	</div>
+        	<div class="col-md-2 height3" ng-show="currentTrack.downloadAvailable">
+        	    <div class="center">
+        	    <a href="[[getTrackUrl()]]" id="downloadTrack" style="color:white" class="glyphicon glyphicon-download-alt" ng-click="deleteTrack($event, currentTrack.track_id)" download></a>
+        	    </div>
+        	</div>
+    	</div>
+    </div>
+    <!-- END track Section -->
+
+    <!-- BEGIN playlist tracks-->
+    <div class="section-container m-section" id="trackSection" ng-if="playlistTracks.length!= 0" style="margin-top: 30px;"> 
+        <div class="row" style="color: #6D6596; margin-bottom: 10px;">
+            <div class="col-md-3">Artist</div>
+            <div class="col-md-3">Track</div>
+            <div class="col-md-6">Url</div>
+        </div>
+        <div class="row" ng-repeat="track in playlistTracks" style="color:white;margin-top:7px">
+            <div class="col-md-3">[[track.artist]]</div>
+            <div class="col-md-3">[[track.track]]</div>
+            <div class="col-md-6">[[track.url]]</div>
+        </div>
+        <div class="row" style="border-top: 1px solid #525252; margin-top: 20px;padding-top: 10px;">
+            <div class="col-md-12">
+                <button class="btn btn-success btn-lg pull-right" ng-click="generatePlaylist(playlistName,playlistMessage)">Create [[playlistName]]</button>
+            </div>
+        </div>
+    </div>
+    <!-- END playlist tracks -->
+
+
+{% endblock %}
+
+
+
+{% block modal %}
+    <div class="modal fade" id="playlistInfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"> 
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                 <input name="name" type="text" class="form-control" ng-model="playlistName" required/>
+                            </div>  
+                            <div class="form-group">
+                                <label for="message">Message:</label>
+                                <textarea name="message" class="form-control" rows="5" ng-model="playlistMessage" id="message" style="color:white"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-primary" ng-disabled="playlistName==undefined" data-toggle="modal" data-target="#playlistInfoModal">Begin</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- playlist success , get playlistURL -->
+    <div class="modal fade" id="playlistSuccessModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"> 
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 style="color:white">Please wait for the tracks to finish downloading!</h3> 
+                        </div>
+                        <div class="col-md-12">
+                            <p>
+                            A URL to your playlist will appear when the process has completed. (This may take a few minutes)</p>
+                            Please Note:
+                            <ul>
+                                <li>Tracks will be deleted from our system once they are downloaded</li>
+                                <li>All playlists will be deleted within 24 hours</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                           <a href="[[playlistURL]]">[[playlistURL]]</a>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <button type="button" ng-show="playlistURL!=''" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- END playlist -->
+{% endblock %}

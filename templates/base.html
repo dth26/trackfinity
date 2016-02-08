@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html ng-app="musicApp">
+	<head>
+		<link href='https://fonts.googleapis.com/css?family=Permanent+Marker' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css')}}">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		{% block css %}
+		{% endblock %}
+	</head>
+	<body ng-controller="trackDownloadCtrl">
+		<nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+		  	<div class="container" style="width: inherit !important">
+		    	<div class="row">
+		    		<div class="col-sm-2">
+		    			<div class="title">MusicFinity</div>
+		    		</div>
+		    		<div class="col-sm-5">
+		    			<ul class="nav nav-pills">
+						  <li role="presentation" ><a href="/" style="color:#DCDFE0">Home</a></li>
+						</ul>
+		    		</div>
+		    		<div class="col-sm-5" style="color:#6DEDAD;text-align:right;">
+		    			{{rt_message}}
+		    		</div>
+		    	</div>
+		 	</div>
+		</nav>
+		<div class="container-fluid">
+			<input id="user" type="hidden" value="{{user|e}}">
+			<div style="background-color:yellow;margin-top: 90px;">
+			 <a href="/getTestTrack" id="downloadTrack" style="color:white; margin-left:20px; font-size: 1.20em" class="glyphicon glyphicon-download-alt"  download></a>
+			 </div>
+			{% block content %}
+			{% endblock %}
+		</div>
+		{% block modal %}
+		{% endblock %}
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="{{ url_for('static', filename='javascript/action.js') }}"></script>
+	</body>
+</html>

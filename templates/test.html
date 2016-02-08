@@ -1,0 +1,205 @@
+<html>
+	<head>
+		<style>
+		body{
+	background-image: url("../images/stars.jpg");
+}
+
+
+
+.center{
+    position: absolute; !important;
+    top: 50%;
+    left: 50%;
+	transform: translate(-50%,-50%);
+	-moz-transform: translate(-50%,-50%);
+	-o-transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
+	-webkit-transform: translate(-50%,-50%);
+}
+.centerX{
+	left: 50%;
+	transform: translate(-50%,-0%);
+	-moz-transform: translate(-50%,-0%);
+	-o-transform: translate(-50%,-0%);
+	-ms-transform: translate(-50%,-0%);
+	-webkit-transform: translate(-50%,-0%);
+}
+.centerY{
+    position: relative !important;
+	top: 50%;
+	transform: translate(-0%,-50%);
+	-moz-transform: translate(-0%,-50%);
+	-o-transform: translate(-0%,-50%);
+	-ms-transform: translate(-0%,-50%);
+	-webkit-transform: translate(-0%,-50%);
+}
+#cssmenu,
+#cssmenu ul,
+#cssmenu ul li,
+#cssmenu ul li a {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  line-height: 1;
+  display: block;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#cssmenu:after,
+#cssmenu > ul:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+#cssmenu {
+  width: auto;
+  border-bottom: 3px solid #47c9af;
+  line-height: 1;
+}
+#cssmenu ul {
+  background: #ffffff;
+}
+#cssmenu > ul > li {
+  float: left;
+}
+#cssmenu.align-center > ul {
+  font-size: 0;
+  text-align: center;
+}
+#cssmenu.align-center > ul > li {
+  display: inline-block;
+  float: none;
+}
+#cssmenu.align-right > ul > li {
+  float: right;
+}
+#cssmenu.align-right > ul > li > a {
+  margin-right: 0;
+  margin-left: -4px;
+}
+#cssmenu > ul > li > a {
+  z-index: 2;
+  padding: 18px 25px 12px 25px;
+  font-size: 15px;
+  font-weight: 400;
+  text-decoration: none;
+  color: #444444;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -ms-transition: all .2s ease;
+  -o-transition: all .2s ease;
+  transition: all .2s ease;
+  margin-right: -4px;
+}
+#cssmenu > ul > li.active > a,
+#cssmenu > ul > li:hover > a,
+#cssmenu > ul > li > a:hover {
+  color: #ffffff;
+}
+#cssmenu > ul > li > a:after {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  width: 100%;
+  height: 120%;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  content: "";
+  -webkit-transition: all .2s ease;
+  -o-transition: all .2s ease;
+  transition: all .2s ease;
+  -webkit-transform: perspective(5px) rotateX(2deg);
+  -webkit-transform-origin: bottom;
+  -moz-transform: perspective(5px) rotateX(2deg);
+  -moz-transform-origin: bottom;
+  transform: perspective(5px) rotateX(2deg);
+  transform-origin: bottom;
+}
+#cssmenu > ul > li.active > a:after,
+#cssmenu > ul > li:hover > a:after,
+#cssmenu > ul > li > a:hover:after {
+  background: #47c9af;
+}
+
+.height3{
+    height: 50px !important;
+}
+.form-control, input[type="text"]{
+	border: none !important;
+	border-bottom:  1px solid #52FF8E !important;
+	background-color: #2D2E2E !important;
+	border-radius: 0px !important;
+}
+.glyphicon-download-alt{
+    font-size: 1.5em;
+}
+
+div.uploader-container{
+	position: relative;
+	background-color: rgba(0,0,0,.8);
+	background-color: #222422;
+	width: 800px;
+	min-height: 200px;
+	padding: 20px;
+	top: 100px;
+	border: 1px solid #525252;
+}
+
+.title{
+	font-family: 'Permanent Marker', cursive;
+	color: white;
+}
+		</style>
+	</head>
+	<body>
+		<div style="border: 1px solid red ">
+			<div id='cssmenu'>
+				<ul>
+				   <li class='active'><a href='#'>Home</a></li>
+				   <li><a href='#'>Products</a></li>
+				   <li><a href='#'>Company</a></li>
+				   <li><a href='#'>Contact</a></li>
+				</ul>
+			</div>
+		    <div class="row uploader-container centerX" ng-controller="trackDownloadCtrl">
+		        <div class="row">
+		            <div class="col-md-12">
+		    			<input type="text" class="form-control" ng-model="youtubeURL" placeholder="Youtube URL goes here">
+		    		</div>
+		        </div>
+		        <div class="row" style="margin-top: 20px;">
+		            <div class="col-md-6">
+		    			<input type="text" class="form-control" ng-model="trackName" placeholder="Track Name">
+		    		</div>
+		    		<div class="col-md-6">
+		    			<input type="text" class="form-control" ng-model="artistName" placeholder="Artist Name">
+		    		</div>
+		        </div>
+		    	<div class="row"  style="margin-top: 40px;">
+		    	    <div class="col-md-4 height3">
+		    	    	<button type="submit" class="btn btn-success btn-lg" ng-click="getTrack(youtubeURL, trackName, artistName)">Get Track</button>
+		        	</div>
+		        	<div class="col-md-6 height3" ng-show="currentTrack.downloadAvailable">
+		        	    <audio class="centerY" controls>
+		                    <source src="[[getTrackUrl()]]" type='audio/mpeg'>
+		                </audio>
+		        	</div>
+		        	<div class="col-md-2 height3" ng-show="currentTrack.downloadAvailable">
+		        	    <div class="center">
+		        	    <a href="[[getTrackUrl()]]" id="downloadTrack" style="color:white" class="glyphicon glyphicon-download-alt" download></a>
+		        	    </div>
+		        	</div>
+		    	</div>
+		    </div>
+		</div>
+	</body>
+</html>

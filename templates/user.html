@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block css %}
+<style>
+.user-content{
+	width: 350px;
+	height: 130px;
+	color: white;
+	background-color: rgba(0,0,0, .9);
+}
+input[type="text"]{
+	width: 100% !important;
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div class="user-content center" ng-controller="userCtrl">
+	<!-- <form action="[[userURL]]" method="POST"> -->
+		<input name="usernameIn" id="usernameIn" type="text" class="form-control" placeholder="Username">
+		<br>
+		<input name="passwordIn" id="passwordIn" type="password" class="form-control" placeholder="Password">
+		<div class="checkbox">
+			<label><input type="checkbox" ng-model="newUserSelected"  ng-true-value="true" class="pull-left">*Are You A New User?</label>
+			<input ng-click="userFunctions(newUserSelected)" ng-show="newUserSelected" type="submit" class="btn btn-primary pull-right" value="Create">
+			<input ng-click="userFunctions(newUserSelected)" ng-show="!newUserSelected" type="submit" class="btn btn-primary pull-right" value="Login">
+		</div>
+	<!-- </form> -->
+</div>
+
+{% endblock %}
