@@ -1,4 +1,4 @@
-**Error Log for ffmpeg**
+#Error Log for ffmpeg
   File "/var/lib/openshift/569c2ca47628e1fb2c000136/python/virtenv/lib/python2.7/site-packages/youtube_dl/YoutubeDL.py", line 1737, in post_process
     files_to_delete, info = pp.run(info)
   File "/var/lib/openshift/569c2ca47628e1fb2c000136/python/virtenv/lib/python2.7/site-packages/youtube_dl/postprocessor/ffmpeg.py", line 218, in run
